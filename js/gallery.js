@@ -30,7 +30,6 @@ function createGallery(array, elementRef) {
 
         return li;
     });
-    
     elementRef.append(...liArray);
 }
 
@@ -62,7 +61,6 @@ function openModal(url, descr) {
 
 // Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
 // Очистка значения атрибута src элемента img.lightbox__image.
-// Удаление слушателей после закрытия модалки
 
 refs.modalCloseBtn.addEventListener('click', closeModal);
 
@@ -71,8 +69,6 @@ function closeModal() {
     refs.body.removeAttribute('style');
     refs.modalImg.src = '';
     refs.modalImg.alt = '';
-    window.removeEventListener('keydown', leafModalImg);
-    refs.modalOverlay.removeEventListener('click', closeModal);
 }
 
 // Закрытие модального окна по клику на div.lightbox__overlay.
