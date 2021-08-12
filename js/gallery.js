@@ -57,32 +57,36 @@ function openModal(url, descr) {
     refs.body.style.overflow = 'hidden';
     refs.modalImg.src = url;
     refs.modalImg.alt = descr;
+
+    // Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
+    // Очистка значения атрибута src элемента img.lightbox__image.
+
+    refs.modalCloseBtn.addEventListener('click', closeModal);
+
+    // Закрытие модального окна по клику на div.lightbox__overlay.
+
+    refs.modalOverlay.addEventListener('click', closeModal);
+
+    // Закрытие модального окна по нажатию клавиши ESC.
+    // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
+    // --- else --- Пролистывание по кругу.
+
+    window.addEventListener('keydown', leafModalImg);
 }
 
-// Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
-// Очистка значения атрибута src элемента img.lightbox__image.
-
-refs.modalCloseBtn.addEventListener('click', closeModal);
 
 function closeModal() {
     refs.modal.classList.toggle('is-open');
     refs.body.removeAttribute('style');
     refs.modalImg.src = '';
     refs.modalImg.alt = '';
+    
+    refs.modalCloseBtn.removeEventListener('click', closeModal);
+    refs.modalOverlay.removeEventListener('click', closeModal);
+    window.removeEventListener('keydown', leafModalImg);
 }
 
-// Закрытие модального окна по клику на div.lightbox__overlay.
-
-refs.modalOverlay.addEventListener('click', closeModal);
-
-// Закрытие модального окна по нажатию клавиши ESC.
-// Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
-// --- else --- Пролистывание по кругу.
-
-window.addEventListener('keydown', leafModalImg);
-
 function leafModalImg(event) {
-    if (!refs.modal.classList.contains('is-open')) return;
 
     switch (event.code) {
         case 'Escape':
